@@ -18,5 +18,5 @@ spec:
       tag: "latest"
       sourceRef:
         kind: HelmRepository
-        name: demoproject/weatherapp
+        name: weatherapp
         namespace: flux-system
