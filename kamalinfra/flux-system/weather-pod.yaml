@@ -9,6 +9,13 @@ spec:
   chart:
     spec:
       chart: weather-pod
+      version: 0.1.0
+  values:
+    replicaCount: 2
+    image:
+      repository: nishant2081/k123s
+      pullPolicy: IfNotPresent
+      tag: "latest"
       sourceRef:
         kind: HelmRepository
         name: demoproject/weatherapp
