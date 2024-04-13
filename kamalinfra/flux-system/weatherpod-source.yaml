@@ -1,7 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: demoproject/weatherapp
+  name: weatherapp
   namespace: flux-system
 spec:
   interval: 5m
