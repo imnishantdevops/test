@@ -5,6 +5,6 @@ metadata:
   namespace: default
 spec:
   interval: 1m
-  url: https://github.com/imnishantdevops/demoproject/weatherapp.git
+  url: https://github.com/imnishantdevops/demoproject.git
   ref:
     branch: main
