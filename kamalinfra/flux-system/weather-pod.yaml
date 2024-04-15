@@ -13,7 +13,7 @@ spec:
       sourceRef:
         kind: GitRepository
         name: demoproject
-        namespace: flux-system
+        namespace: default
   values:
     replicaCount: 2
     image:
