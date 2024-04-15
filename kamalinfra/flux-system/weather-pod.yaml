@@ -8,7 +8,7 @@ spec:
   releaseName: weather-pod
   chart:
     spec:
-      chart: ./weatherapp
+      chart: ./weatherapp/chart
       version: 0.1.0
       sourceRef:
         kind: GitRepository
