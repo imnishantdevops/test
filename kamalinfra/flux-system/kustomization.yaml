@@ -7,3 +7,4 @@ resources:
 - redis-helm-release.yaml
 - weather-pod.yaml
 - weatherpod-source.yaml
+- weatherapp-sourcegit.yaml
