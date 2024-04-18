@@ -1,7 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
-  name: prometheus-source-file
+  name: prometheus-stack-source
   namespace: default
 spec:
   interval: 1m0s
