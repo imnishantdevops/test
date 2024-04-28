@@ -305,24 +305,24 @@ spec:
               - source_labels: [__param_target]
                 target_label: instance
               - target_label: __address__
-                replacement: prometheus-redis-exporter.monitoring.svc.cluster.local:9121
+                replacement: prometheus-redis-exporter.
           - job_name: 'cloudwatch-exporter'
             honor_labels: true
             scrape_interval: 30s
             scrape_timeout: 20s
             metrics_path: /metrics
             static_configs:
-              - targets: ['cloudwatch-exporter-telegraf.monitoring.svc.cluster.local:9273','custom-rds-es-exporter.monitoring.svc.cluster.local:8000']
+              - targets: ['']
           - job_name: 'pgbouncer-exporter'
             honor_labels: true
             metrics_path: /metrics
             static_configs:
-              - targets: ['pgbouncer-exporter.monitoring.svc.cluster.local:9100']              
+              - targets: ['pgbounce']              
           - job_name: 'elasticsearch-exporter'
             honor_labels: true
             metrics_path: /metrics
             static_configs:
-              - targets: ['elasticsearch-exporter-int-telegraf.monitoring.svc.cluster.local:9273','elasticsearch-prometheus-elasticsearch-exporter.monitoring.svc.cluster.local:9108']
+              - targets: ['elasticsearch-exporter','elasticsearch-prometheus-elasticsearch-exporter']
               
           - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
             job_name: kubernetes-apiservers
@@ -547,126 +547,4 @@ spec:
               - __meta_kubernetes_pod_phase
             scrape_interval: 5m
             scrape_timeout: 30s
-
-    grafana:
-      replicas: 3
-      ingress:
-        ## If true, Grafana Ingress will be created
-        ##
-        enabled: true
-
-        ## Annotations for Grafana Ingress
-        ##
-        annotations: 
-            cert-manager.io/cluster-issuer: ""
-            kubernetes.io/ingress.class: nginx-office
-            kubernetes.io/tls-acme: 'false'
-
-        ## Labels to be added to the Ingress
-        ##
-        labels: {}
-
-        ## Hostnames.
-        ## Must be provided if Ingress is enable.
-        ##
-        # hosts:
-        #   - grafana.domain.com
-        hosts:
-          - grafana.kamal.io
-
-        ## Path for grafana ingress
-        path: /
-
-        ## TLS configuration for grafana Ingress
-        ## Secret must be manually created in the namespace
-        ##
-        tls: 
-        - secretName: kamal-io-tls-cert
-          hosts:
-          - grafana.kamal.io
-
-      sidecar:
-        datasources:
-          defaultDatasourceScrapeInterval: 5s
-      admin:
-        existingSecret: "grafana-admin-credential"
-        userKey: adminUser
-        passwordKey: adminPassword
-      deleteDatasources:
-        - name: loki
-          orgId: 1
-        - name: loki-distributed
-          orgId: 1
-      additionalDataSources: 
-        - name: Thanos
-          access: proxy
-          basicAuth: false
-          basicAuthPassword: pass
-          basicAuthUser: daco
-          editable: false
-          jsonData:
-              tlsSkipVerify: true
-          orgId: 1
-          type: prometheus
-          url: http://thanos-deployment-query-frontend:9090
-          version: 1
-        - name: Loki
-          access: proxy
-          type: loki
-          url: http://loki-distributed-query-frontend:3100
-          basicAuth: false
-          editable: false
-          jsonData:
-              tlsSkipVerify: true
-              maxLines: 1000
-              derivedFields:
-                # Field with internal link pointing to data source in Grafana.
-                # Right now, Grafana supports only Jaeger and Zipkin data sources as link targets.
-                # datasourceUid value can be anything, but it should be unique across all defined data source uids.
-                - datasourceUid: tempo-spectra
-                  matcherRegex: trace_id":"(\w+)"
-                  name: TraceID
-                  # url will be interpreted as query for the datasource
-                  url: "$$$${__value.raw}"
-                - datasourceUid: tempo-spectra
-                  matcherRegex: "trace_id: (\\w+)"
-                  name: Trace_ID
-                  # url will be interpreted as query for the datasource
-                  url: "$$$${__value.raw}"
-      grafana.ini:
-        auth:
-          disable_login_form: true
-        database:
-          # url = ""
-          type: postgres
-          host: pgsql-for-grafana-postgresql-ha-pgpool:5432
-          name: grafana_kubernetes
-          user: postgres
-          password: 'postgres'
-        server:
-          domain: kamal.io
-          root_url: https://grafana.kamal.io
-        auth.generic_oauth:
-          name: "OneLogin"
-          enabled: false
-          allow_sign_up: false
-          scopes: openid email name params
-          auth_url: https://kamal.onelogin.com/
-          token_url: https://kamal.onelogin.com/
-          api_url: https://kamal.onelogin.com/
-          role_attribute_path: params.role
-          team_ids:
-          allowed_organizations:
-          client_id: 
-          client_secret: 
-        auth.ldap:
-          enabled: false
-          allow_sign_up: true
-          config_file: /etc/grafana/ldap.toml
-      ldap:
-        enabled: false
-        existingSecret: "grafana-ldap-toml"
-
-      env:
-        GF_RENDERING_SERVER_URL: null
-        GF_RENDERING_CALLBACK_URL: null
+     
