@@ -83,7 +83,7 @@ spec:
             receiver: empty
             continue: false
           - match:
-              namespace: fes
+              namespace: default
             receiver: staging
             continue: false
           - match:
@@ -113,7 +113,7 @@ spec:
           repository: quay.io/prometheus/alertmanager
           tag: v0.22.2
           sha: ""
-        replicas: 3
+        replicas: 1
 
       ingress:
         enabled: true
@@ -201,8 +201,6 @@ spec:
           - --storage.tsdb.max-block-duration=15m
           - --storage.tsdb.min-block-duration=15m
         externalLabels:
-          # prometheus: aws-prod-oregon-k8s
-          # prometheus_replica: aws-prod-oregon-k8s
           prom: aws-k8s
         replicas: 1
         # tolerations:
@@ -244,7 +242,7 @@ spec:
             ec2_sd_configs:
               - region: us-west-2
                 port: 7073
-                profile: arn:aws:iam::963202130184:role/prometheus-role
+                profile: 
             relabel_configs:
           # Ignore instances with a Name starting with "prod-k8s"
               - source_labels: [__meta_ec2_tag_Name]
@@ -268,7 +266,7 @@ spec:
             ec2_sd_configs:
               - region: us-west-2
                 port: 7095
-                profile: arn:aws:iam::963202130184:role/prometheus-role
+                profile: 
             relabel_configs:
           # Only monitor instances with a Name starting with "zookeeper and kafka-debezium"
               - source_labels: [__meta_ec2_tag_Name]
