@@ -8,4 +8,3 @@ resources:
 - weather-pod.yaml
 - weatherapp-sourcegit.yaml
 - prometheus-source-file.yaml
-- prometheus-stack.yaml
