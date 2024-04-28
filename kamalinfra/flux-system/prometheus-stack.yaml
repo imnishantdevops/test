@@ -288,12 +288,7 @@ spec:
             scrape_timeout: 60s
             static_configs:
               - targets:
-                - redis://staging-redis.vxz4v2.ng.0001.usw2.cache.amazonaws.com:6379
-                - redis://redis-sentinel.default.svc.cluster.local:6379
-                - redis://redis-superset-master.default.svc.cluster.local:6379
-                - redis://redis-master.connector.svc.cluster.local:6379
-                - redis://redis-master.default.svc.cluster.local:6379
-                - redis://redis-master.connector-qa.svc.cluster.local:6379
+                - redis://redis-master.default.svc.cluster.local:5678
                 
                 
             metrics_path: /scrape
