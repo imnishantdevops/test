@@ -11,7 +11,7 @@ spec:
       sourceRef:
         kind: GitRepository
         name: prometheus-stack-source
-        namespace: monitoring
+        namespace: default
       version: "39.13.0"
   interval: 5m
   values:
