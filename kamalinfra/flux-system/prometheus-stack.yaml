@@ -165,16 +165,10 @@ spec:
             nginx.ingress.kubernetes.io/use-regex: "true"
         labels: {}
 
-        ## Hostnames.
-        ## Must be provided if Ingress is enabled.
-        ##
-        # hosts:
-        #   - prometheus.domain.com
         hosts:
           - prometheus.kamal.io
 
-        ## Paths to use for ingress rules - one path should match the prometheusSpec.routePrefix
-        ##
+        ## Paths to use for ingress rules - one path should match the prometheusSpec.routePrefixalertmanageralertmanager
         paths:
         - /
 
@@ -220,11 +214,11 @@ spec:
         retentionSize: "10GB"
         resources:
           requests:
-            cpu: 4000m
-            memory: 24Gi
+            cpu: 40m
+            memory: 1Gi
           limits:
-            cpu: 7000m
-            memory: 30Gi
+            cpu: 70m
+            memory: 1Gi
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -232,7 +226,7 @@ spec:
               accessModes: ["ReadWriteOnce"]
               resources:
                 requests:
-                  storage: 500Gi
+                  storage: 1Gi
 
         ##these are available in default prometheus, but not available in kube-prometheus-stack, therefore adding manually
         additionalScrapeConfigs:
